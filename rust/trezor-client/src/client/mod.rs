@@ -8,6 +8,9 @@ mod ethereum;
 #[cfg(feature = "ethereum")]
 pub use ethereum::*;
 
+#[cfg(feature = "nostr")]
+mod nostr;
+
 #[cfg(feature = "solana")]
 mod solana;
 
