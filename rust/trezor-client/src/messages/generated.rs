@@ -238,6 +238,9 @@ trezor_message_impl! {
     NostrPubkey => MessageType_NostrPubkey,
     NostrSignEvent => MessageType_NostrSignEvent,
     NostrEventSignature => MessageType_NostrEventSignature,
+}
+
+trezor_message_impl! {
     GitCommitUpdate => MessageType_GitCommitUpdate,
     GitVerify => MessageType_GitVerify,
 }

@@ -256,4 +256,28 @@ impl Trezor {
         req.set_ecdsa_curve_name(curve);
         self.call(req, Box::new(|_, m| Ok(m)))
     }
+
+    pub fn git_commit_update(
+        &mut self,
+        commit_hash: Vec<u8>,
+    ) -> Result<TrezorResponse<'_, (), protos::Success>> {
+        let mut req = protos::GitCommitUpdate::new();
+        req.set_commit_hash(commit_hash);
+        self.call(req, Box::new(|_, _| Ok(())))
+    }
+
+    pub fn git_verify(
+        &mut self,
+        commit: Vec<u8>,
+        trees: Vec<Vec<u8>>,
+        path: Vec<String>,
+        blob: Vec<u8>,
+    ) -> Result<TrezorResponse<'_, (), protos::Success>> {
+        let mut req = protos::GitVerify::new();
+        req.set_commit(commit);
+        req.trees = trees;
+        req.path = path;
+        req.set_blob(blob);
+        self.call(req, Box::new(|_, _| Ok(())))
+    }
 }

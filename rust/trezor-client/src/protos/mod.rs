@@ -24,6 +24,7 @@ mod generated {
         messages_definitions
         messages_management
         messages_benchmark
+        messages_git
         messages_thp
         options
 
