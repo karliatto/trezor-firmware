@@ -176,6 +176,7 @@ def cli() -> None:
     help="Sort pubkeys lexicographically using BIP-67",
 )
 @click.option("-C", "--chunkify", is_flag=True)
+@click.option("-S", "--with-signature", is_flag=True, help="Show nostr signature of address")
 @with_session
 def get_address(
     session: "Session",
@@ -188,6 +189,7 @@ def get_address(
     multisig_suffix_length: int,
     multisig_sort_pubkeys: bool,
     chunkify: bool,
+    with_signature: bool,
 ) -> str:
     """Get address for specified path.
 
@@ -235,6 +237,20 @@ def get_address(
             script_type = messages.InputScriptType.SPENDMULTISIG
     else:
         multisig = None
+
+    if with_signature:
+        response = btc.get_authenticated_address(
+            session,
+            coin,
+            address_n,
+            show_display,
+            script_type=script_type,
+            multisig=multisig,
+            unlock_path=get_unlock_path(address_n),
+            chunkify=chunkify,
+        )
+        sig = response.signature.hex() if response.signature else "(none - firmware not updated)"
+        return "Address: " + response.address + "\nSignature: " + sig
 
     return btc.get_address(
         session,

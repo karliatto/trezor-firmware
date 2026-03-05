@@ -16,7 +16,7 @@ async def sign_event(msg: NostrSignEvent, keychain: Keychain) -> NostrEventSigna
     from trezor.crypto.curve import bip340
     from trezor.crypto.hashlib import sha256
     from trezor.messages import NostrEventSignature
-    from trezor.ui.layouts import confirm_value
+    from trezor.ui.layouts import confirm_new_contact, confirm_value
 
     from apps.common import paths
 
@@ -31,8 +31,6 @@ async def sign_event(msg: NostrSignEvent, keychain: Keychain) -> NostrEventSigna
     node = keychain.derive(address_n)
     pk = node.public_key()[-32:]
 
-    title = TR.nostr__event_kind_template.format(kind)
-
     # The event ID is obtained by serializing the event in a specific way:
     # "[0,pubkey,created_at,kind,tags,content]"
     # See NIP-01: https://github.com/nostr-protocol/nips/blob/master/01.md
@@ -40,11 +38,23 @@ async def sign_event(msg: NostrSignEvent, keychain: Keychain) -> NostrEventSigna
         ["[" + ",".join(f'"{t}"' for t in tag) + "]" for tag in tags]
     )
 
-    info_items = [
-        ("Created", str(created_at), None),
-        ("Tags", serialized_tags, None),
-    ]
-    await confirm_value(title, content, "", "nostr_sign_event", info_items=info_items)
+    if content and kind == 27922:
+        if "/" not in content:
+            raise ValueError("Invalid content")
+        # message has format <label>/<npub>
+        label, contact_id = content.split("/", 1)
+        await confirm_new_contact(
+            label=label,
+            contact_id=contact_id,
+            chunkify=True,
+        )
+    else:
+        title = TR.nostr__event_kind_template.format(kind)
+        info_items = [
+            ("Created", str(created_at), None),
+            ("Tags", serialized_tags, None),
+        ]
+        await confirm_value(title, content, "", "nostr_sign_event", info_items=info_items)
 
     serialized_event = f'[0,"{hexlify(pk).decode()}",{created_at},{kind},[{serialized_tags}],"{content}"]'
     event_id = sha256(serialized_event).digest()

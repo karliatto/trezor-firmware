@@ -405,6 +405,45 @@ async def show_pubkey(
     )
 
 
+async def confirm_new_contact(
+    label: str,
+    contact_id: str,
+    path: str | None = None,
+    account: str | None = None,
+    chunkify: bool = True,
+) -> None:
+    info_items: list[StrPropertyType] = []
+    if path:
+        info_items.append(("Path", path))
+    if account:
+        info_items.append(("Account", account))
+
+    await confirm_value(
+        title="npub",
+        subtitle="New contact",
+        value=contact_id,
+        description="",
+        br_name="confirm_new_contact",
+        is_data=True,
+        info_items=info_items or None,
+        info_title=TR.buttons__more_info,
+        verb=TR.buttons__confirm,
+        chunkify=chunkify,
+    )
+    await confirm_value(
+        title="Label",
+        subtitle="New contact",
+        value=label,
+        description="",
+        br_name="confirm_new_contact",
+        is_data=False,
+        info_items=info_items or None,
+        info_title=TR.buttons__more_info,
+        hold=True,
+        chunkify=False,
+    )
+
+
 async def show_error_and_raise(
     br_name: str,
     content: str,

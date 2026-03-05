@@ -398,6 +398,35 @@ async def show_pubkey(
     show_continue_in_app(TR.address__public_key_confirmed)
 
 
+async def confirm_new_contact(
+    label: str,
+    contact_id: str,
+    path: str | None = None,
+    account: str | None = None,
+    chunkify: bool = True,
+) -> None:
+    await confirm_value(
+        title="npub",
+        subtitle="New contact",
+        value=contact_id,
+        description="",
+        br_name="confirm_new_contact",
+        is_data=True,
+        verb=TR.buttons__confirm,
+        chunkify=chunkify,
+    )
+    await confirm_value(
+        title="Label",
+        subtitle="New contact",
+        value=label,
+        description="",
+        br_name="confirm_new_contact",
+        is_data=False,
+        hold=True,
+        chunkify=False,
+    )
+
+
 async def show_error_and_raise(
     br_name: str,
     content: str,

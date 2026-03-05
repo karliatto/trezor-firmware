@@ -1172,6 +1172,7 @@ class Address(protobuf.MessageType):
     FIELDS = {
         1: protobuf.Field("address", "string", repeated=False, required=True),
         2: protobuf.Field("mac", "bytes", repeated=False, required=False, default=None),
+        3: protobuf.Field("signature", "bytes", repeated=False, required=False, default=None),
     }
 
     def __init__(
@@ -1179,9 +1180,11 @@ class Address(protobuf.MessageType):
         *,
         address: "str",
         mac: Optional["bytes"] = None,
+        signature: Optional["bytes"] = None,
     ) -> None:
         self.address = address
         self.mac = mac
+        self.signature = signature
 
 
 class GetOwnershipId(protobuf.MessageType):

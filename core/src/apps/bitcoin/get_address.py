@@ -1,8 +1,11 @@
 from typing import TYPE_CHECKING
 
 from trezor.enums import MultisigPubkeysOrder
+from trezor.messages import NostrEventSignature, NostrSignEvent
 
 from apps.common import safety_checks
+from apps.common.keychain import with_slip44_keychain
+from apps.common.paths import PATTERN_BIP44
 
 from .common import multisig_uses_single_path
 from .keychain import with_keychain
@@ -32,6 +35,24 @@ def _get_xpubs(
         result.append(node.serialize_public(xpub_magic))
 
     return result
+
+
+@with_slip44_keychain(PATTERN_BIP44, slip44_id=1237, curve="secp256k1")
+async def sign_with_nostr(msg: NostrSignEvent, keychain: Keychain) -> NostrEventSignature:
+    """Sign a Bitcoin address with the Nostr key."""
+    from trezor.crypto.curve import secp256k1
+    from trezor.crypto.hashlib import sha256
+
+    NOSTR_ADDRESS_PATH = [2147483692, 2147484885, 2147483648, 0, 0]
+
+    address_to_sign = msg.content or ""
+    node = keychain.derive(NOSTR_ADDRESS_PATH)
+    sk = node.private_key()
+
+    digest = sha256(address_to_sign.encode()).digest()
+    signature = secp256k1.sign(sk, digest)
+
+    return NostrEventSignature(pubkey=b"", id=b"", signature=signature)
 
 
 @with_keychain
@@ -160,4 +181,9 @@ async def get_address(msg: GetAddress, keychain: Keychain, coin: CoinInfo) -> Ad
                 chunkify=bool(msg.chunkify),
             )
 
-    return Address(address=address, mac=mac)
+    signature = None
+    if not multisig:
+        res = await sign_with_nostr(NostrSignEvent(address_n=[1, 2, 3, 4], created_at=0, kind=0, content=address))
+        signature = res.signature
+
+    return Address(address=address, mac=mac, signature=signature)

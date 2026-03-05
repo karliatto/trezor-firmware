@@ -460,12 +460,14 @@ if TYPE_CHECKING:
     class Address(protobuf.MessageType):
         address: "str"
         mac: "AnyBytes | None"
+        signature: "AnyBytes | None"
 
         def __init__(
             self,
             *,
             address: "str",
             mac: "AnyBytes | None" = None,
+            signature: "AnyBytes | None" = None,
         ) -> None:
             pass
 

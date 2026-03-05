@@ -38,10 +38,12 @@ def cli() -> None:
 
 @cli.command()
 @click.option("-a", "--account", default=0, help="Account index")
+@click.option("-d", "--show-display", is_flag=True, help="Show pubkey on device display")
 @with_session
 def get_pubkey(
     session: "Session",
     account: int,
+    show_display: bool,
 ) -> str:
     """Return the pubkey derived by the given path."""
 
@@ -50,6 +52,7 @@ def get_pubkey(
     return nostr.get_pubkey(
         session,
         address_n,
+        show_display=show_display,
     ).hex()
 
 
@@ -91,3 +94,41 @@ def sign_event(
     return {
         "signed_event": event_json,
     }
+
+
+@cli.command()
+@click.option("-a", "--account", default=0, help="Account index")
+@click.argument("address")
+@click.argument("signature")
+@with_session
+def verify_address(
+    session: "Session",
+    account: int,
+    address: str,
+    signature: str,
+) -> str:
+    """Verify a Nostr-signed Bitcoin address using the key from the device."""
+    from hashlib import sha256
+
+    from ecdsa import SECP256k1, BadSignatureError, VerifyingKey
+    from ecdsa.util import sigdecode_string
+
+    address_n = tools.parse_path(PATH_TEMPLATE.format(account))
+    pubkey = nostr.get_pubkey(session, address_n)
+
+    sig_bytes = bytes.fromhex(signature)
+    # secp256k1.sign() output: 1 byte recovery id + 32 r + 32 s
+    sig_rs = sig_bytes[1:]
+
+    digest = sha256(address.encode()).digest()
+
+    # nostr pubkey is x-only (32 bytes); try both y-parities
+    for prefix in (b"\x02", b"\x03"):
+        try:
+            vk = VerifyingKey.from_string(prefix + pubkey, curve=SECP256k1)
+            vk.verify_digest(sig_rs, digest, sigdecode=sigdecode_string)
+            return "Signature valid!"
+        except BadSignatureError:
+            continue
+
+    raise click.ClickException("Signature invalid!")
