@@ -1568,6 +1568,8 @@ pub enum TranslatedString {
     words__confirm_all = 1178,  // "Confirm all"
     words__show_next = 1179,  // "Show next"
     words__resource = 1180,  // "Resource"
+    #[cfg(feature = "universal_fw")]
+    nostr__valid_event = 1181,  // "The event signature is valid."
 }
 
 impl TranslatedString {
@@ -2756,6 +2758,7 @@ impl TranslatedString {
                 "Confirm all",
                 "Show next",
                 "Resource",
+                "The event signature is valid.",
             );
 
             #[cfg(all(feature = "debug", feature = "universal_fw"))]
@@ -3942,6 +3945,7 @@ impl TranslatedString {
                 21662,
                 21671,
                 21679,
+                21708,
             ];
 
             #[cfg(all(feature = "debug", not(feature = "universal_fw")))]
@@ -5127,6 +5131,7 @@ impl TranslatedString {
                 "Confirm all",
                 "Show next",
                 "Resource",
+                "The event signature is valid.",
             );
 
             #[cfg(all(feature = "debug", not(feature = "universal_fw")))]
@@ -6313,6 +6318,7 @@ impl TranslatedString {
                 21662,
                 21671,
                 21679,
+                21708,
             ];
 
             #[cfg(all(not(feature = "debug"), feature = "universal_fw"))]
@@ -7498,6 +7504,7 @@ impl TranslatedString {
                 "Confirm all",
                 "Show next",
                 "Resource",
+                "The event signature is valid.",
             );
 
             #[cfg(all(not(feature = "debug"), feature = "universal_fw"))]
@@ -8684,6 +8691,7 @@ impl TranslatedString {
                 21662,
                 21671,
                 21679,
+                21708,
             ];
 
             #[cfg(all(not(feature = "debug"), not(feature = "universal_fw")))]
@@ -9869,6 +9877,7 @@ impl TranslatedString {
                 "Confirm all",
                 "Show next",
                 "Resource",
+                "The event signature is valid.",
             );
 
             #[cfg(all(not(feature = "debug"), not(feature = "universal_fw")))]
@@ -11055,6 +11064,7 @@ impl TranslatedString {
                 21662,
                 21671,
                 21679,
+                21708,
             ];
 
         } else if #[cfg(feature = "layout_caesar")] {
@@ -12241,6 +12251,7 @@ impl TranslatedString {
                 "Confirm all",
                 "Show next",
                 "Resource",
+                "The event signature is valid.",
             );
 
             #[cfg(all(feature = "debug", feature = "universal_fw"))]
@@ -13427,6 +13438,7 @@ impl TranslatedString {
                 18775,
                 18784,
                 18792,
+                18821,
             ];
 
             #[cfg(all(feature = "debug", not(feature = "universal_fw")))]
@@ -14612,6 +14624,7 @@ impl TranslatedString {
                 "Confirm all",
                 "Show next",
                 "Resource",
+                "The event signature is valid.",
             );
 
             #[cfg(all(feature = "debug", not(feature = "universal_fw")))]
@@ -15798,6 +15811,7 @@ impl TranslatedString {
                 18775,
                 18784,
                 18792,
+                18821,
             ];
 
             #[cfg(all(not(feature = "debug"), feature = "universal_fw"))]
@@ -16983,6 +16997,7 @@ impl TranslatedString {
                 "Confirm all",
                 "Show next",
                 "Resource",
+                "The event signature is valid.",
             );
 
             #[cfg(all(not(feature = "debug"), feature = "universal_fw"))]
@@ -18169,6 +18184,7 @@ impl TranslatedString {
                 18775,
                 18784,
                 18792,
+                18821,
             ];
 
             #[cfg(all(not(feature = "debug"), not(feature = "universal_fw")))]
@@ -19354,6 +19370,7 @@ impl TranslatedString {
                 "Confirm all",
                 "Show next",
                 "Resource",
+                "The event signature is valid.",
             );
 
             #[cfg(all(not(feature = "debug"), not(feature = "universal_fw")))]
@@ -20540,6 +20557,7 @@ impl TranslatedString {
                 18775,
                 18784,
                 18792,
+                18821,
             ];
 
         } else if #[cfg(feature = "layout_delizia")] {
@@ -21726,6 +21744,7 @@ impl TranslatedString {
                 "Confirm all",
                 "Show next",
                 "Resource",
+                "The event signature is valid.",
             );
 
             #[cfg(all(feature = "debug", feature = "universal_fw"))]
@@ -22912,6 +22931,7 @@ impl TranslatedString {
                 20664,
                 20673,
                 20681,
+                20710,
             ];
 
             #[cfg(all(feature = "debug", not(feature = "universal_fw")))]
@@ -24097,6 +24117,7 @@ impl TranslatedString {
                 "Confirm all",
                 "Show next",
                 "Resource",
+                "The event signature is valid.",
             );
 
             #[cfg(all(feature = "debug", not(feature = "universal_fw")))]
@@ -25283,6 +25304,7 @@ impl TranslatedString {
                 20664,
                 20673,
                 20681,
+                20710,
             ];
 
             #[cfg(all(not(feature = "debug"), feature = "universal_fw"))]
@@ -26468,6 +26490,7 @@ impl TranslatedString {
                 "Confirm all",
                 "Show next",
                 "Resource",
+                "The event signature is valid.",
             );
 
             #[cfg(all(not(feature = "debug"), feature = "universal_fw"))]
@@ -27654,6 +27677,7 @@ impl TranslatedString {
                 20664,
                 20673,
                 20681,
+                20710,
             ];
 
             #[cfg(all(not(feature = "debug"), not(feature = "universal_fw")))]
@@ -28839,6 +28863,7 @@ impl TranslatedString {
                 "Confirm all",
                 "Show next",
                 "Resource",
+                "The event signature is valid.",
             );
 
             #[cfg(all(not(feature = "debug"), not(feature = "universal_fw")))]
@@ -30025,6 +30050,7 @@ impl TranslatedString {
                 20664,
                 20673,
                 20681,
+                20710,
             ];
 
         } else if #[cfg(feature = "layout_eckhart")] {
@@ -31211,6 +31237,7 @@ impl TranslatedString {
                 "Confirm all",
                 "Show next",
                 "Resource",
+                "The event signature is valid.",
             );
 
             #[cfg(all(feature = "debug", feature = "universal_fw"))]
@@ -32397,6 +32424,7 @@ impl TranslatedString {
                 21419,
                 21428,
                 21436,
+                21465,
             ];
 
             #[cfg(all(feature = "debug", not(feature = "universal_fw")))]
@@ -33582,6 +33610,7 @@ impl TranslatedString {
                 "Confirm all",
                 "Show next",
                 "Resource",
+                "The event signature is valid.",
             );
 
             #[cfg(all(feature = "debug", not(feature = "universal_fw")))]
@@ -34768,6 +34797,7 @@ impl TranslatedString {
                 21419,
                 21428,
                 21436,
+                21465,
             ];
 
             #[cfg(all(not(feature = "debug"), feature = "universal_fw"))]
@@ -35953,6 +35983,7 @@ impl TranslatedString {
                 "Confirm all",
                 "Show next",
                 "Resource",
+                "The event signature is valid.",
             );
 
             #[cfg(all(not(feature = "debug"), feature = "universal_fw"))]
@@ -37139,6 +37170,7 @@ impl TranslatedString {
                 21419,
                 21428,
                 21436,
+                21465,
             ];
 
             #[cfg(all(not(feature = "debug"), not(feature = "universal_fw")))]
@@ -38324,6 +38356,7 @@ impl TranslatedString {
                 "Confirm all",
                 "Show next",
                 "Resource",
+                "The event signature is valid.",
             );
 
             #[cfg(all(not(feature = "debug"), not(feature = "universal_fw")))]
@@ -39510,6 +39543,7 @@ impl TranslatedString {
                 21419,
                 21428,
                 21436,
+                21465,
             ];
 
         }
@@ -40377,6 +40411,8 @@ impl TranslatedString {
         (Qstr::MP_QSTR_nem__unknown_mosaic, Self::nem__unknown_mosaic),
         #[cfg(feature = "universal_fw")]
         (Qstr::MP_QSTR_nostr__event_kind_template, Self::nostr__event_kind_template),
+        #[cfg(feature = "universal_fw")]
+        (Qstr::MP_QSTR_nostr__valid_event, Self::nostr__valid_event),
         (Qstr::MP_QSTR_passphrase__access_hidden_wallet, Self::passphrase__access_hidden_wallet),
         (Qstr::MP_QSTR_passphrase__access_wallet, Self::passphrase__access_wallet),
         (Qstr::MP_QSTR_passphrase__always_on_device, Self::passphrase__always_on_device),

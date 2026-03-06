@@ -553,6 +553,7 @@ class TR:
     nem__unencrypted: str = "Unencrypted"
     nem__unknown_mosaic: str = "Unknown mosaic!"
     nostr__event_kind_template: str = "Event kind: {0}"
+    nostr__valid_event: str = "The event signature is valid."
     passphrase__access_hidden_wallet: str = "Access hidden wallet"
     passphrase__access_wallet: str = "Access passphrase wallet?"
     passphrase__always_on_device: str = "Always enter your passphrase on Trezor?"

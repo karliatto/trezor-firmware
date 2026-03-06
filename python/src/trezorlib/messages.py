@@ -7040,14 +7040,17 @@ class NostrGetPubkey(protobuf.MessageType):
     MESSAGE_WIRE_TYPE = 2001
     FIELDS = {
         1: protobuf.Field("address_n", "uint32", repeated=True, required=False, default=None),
+        2: protobuf.Field("show_display", "bool", repeated=False, required=False, default=None),
     }
 
     def __init__(
         self,
         *,
         address_n: Optional[Sequence["int"]] = None,
+        show_display: Optional["bool"] = None,
     ) -> None:
         self.address_n: Sequence["int"] = address_n if address_n is not None else []
+        self.show_display = show_display
 
 
 class NostrPubkey(protobuf.MessageType):
@@ -7126,6 +7129,38 @@ class NostrEventSignature(protobuf.MessageType):
         signature: "bytes",
     ) -> None:
         self.pubkey = pubkey
+        self.id = id
+        self.signature = signature
+
+
+class NostrVerifyEvent(protobuf.MessageType):
+    MESSAGE_WIRE_TYPE = None
+    FIELDS = {
+        1: protobuf.Field("pubkey", "bytes", repeated=False, required=True),
+        2: protobuf.Field("created_at", "uint32", repeated=False, required=True),
+        3: protobuf.Field("kind", "uint32", repeated=False, required=True),
+        4: protobuf.Field("tags", "NostrTag", repeated=True, required=False, default=None),
+        5: protobuf.Field("content", "string", repeated=False, required=True),
+        6: protobuf.Field("id", "bytes", repeated=False, required=True),
+        7: protobuf.Field("signature", "bytes", repeated=False, required=True),
+    }
+
+    def __init__(
+        self,
+        *,
+        pubkey: "bytes",
+        created_at: "int",
+        kind: "int",
+        content: "str",
+        id: "bytes",
+        signature: "bytes",
+        tags: Optional[Sequence["NostrTag"]] = None,
+    ) -> None:
+        self.tags: Sequence["NostrTag"] = tags if tags is not None else []
+        self.pubkey = pubkey
+        self.created_at = created_at
+        self.kind = kind
+        self.content = content
         self.id = id
         self.signature = signature
 

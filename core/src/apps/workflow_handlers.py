@@ -130,6 +130,8 @@ def _find_message_handler_module(msg_type: int) -> str:
                 return "apps.nostr.get_pubkey"
             if msg_type == MessageType.NostrSignEvent:
                 return "apps.nostr.sign_event"
+            if msg_type == MessageType.NostrVerifyEvent:
+                return "apps.nostr.verify_event"
 
         # tron
         if msg_type == MessageType.TronGetAddress:

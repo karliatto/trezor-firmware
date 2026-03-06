@@ -67,3 +67,23 @@ message NostrEventSignature {
     required bytes id = 2;         // ID of the event
     required bytes signature = 3;  // signature of the event
 }
+
+/**
+ * Request: Ask device to verify an event signature
+ * @start
+ * @next Success
+ * @next Failure
+ */
+message NostrVerifyEvent {
+    required bytes pubkey = 1;      // x-only public key (32 bytes)
+
+    // Nostr event fields
+    // See NIP-01: https://github.com/nostr-protocol/nips/blob/master/01.md
+
+    required uint32 created_at = 2;  // Event created_at: unix timestamp in seconds
+    required uint32 kind = 3;        // Event kind: integer between 0 and 65535
+    repeated NostrTag tags = 4;      // Event tags
+    required string content = 5;     // Event content: arbitrary string
+    required bytes id = 6;           // Event ID to verify (32 bytes)
+    required bytes signature = 7;    // Schnorr signature to verify (64 bytes)
+}

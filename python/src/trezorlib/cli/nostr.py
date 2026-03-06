@@ -97,6 +97,40 @@ def sign_event(
 
 
 @cli.command()
+@click.argument("event")
+@with_session
+def verify_event(
+    session: "Session",
+    event: str,
+) -> str:
+    """Verify a signed Nostr event on the device."""
+
+    event_json = json.loads(event)
+
+    ok = nostr.verify_event(
+        session,
+        messages.NostrVerifyEvent(
+            pubkey=bytes.fromhex(event_json["pubkey"]),
+            created_at=event_json["created_at"],
+            kind=event_json["kind"],
+            tags=[
+                messages.NostrTag(
+                    key=t[0], value=t[1] if len(t) > 1 else None, extra=t[2:]
+                )
+                for t in event_json["tags"]
+            ],
+            content=event_json["content"],
+            id=bytes.fromhex(event_json["id"]),
+            signature=bytes.fromhex(event_json["sig"]),
+        ),
+    )
+
+    if not ok:
+        raise click.ClickException("Event signature is invalid!")
+    return "Event signature is valid."
+
+
+@cli.command()
 @click.option("-a", "--account", default=0, help="Account index")
 @click.argument("address")
 @click.argument("signature")

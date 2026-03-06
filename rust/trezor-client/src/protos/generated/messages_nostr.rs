@@ -30,6 +30,8 @@ pub struct NostrGetPubkey {
     // message fields
     // @@protoc_insertion_point(field:hw.trezor.messages.nostr.NostrGetPubkey.address_n)
     pub address_n: ::std::vec::Vec<u32>,
+    // @@protoc_insertion_point(field:hw.trezor.messages.nostr.NostrGetPubkey.show_display)
+    pub show_display: ::std::option::Option<bool>,
     // special fields
     // @@protoc_insertion_point(special_field:hw.trezor.messages.nostr.NostrGetPubkey.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -46,13 +48,37 @@ impl NostrGetPubkey {
         ::std::default::Default::default()
     }
 
+    // optional bool show_display = 2;
+
+    pub fn show_display(&self) -> bool {
+        self.show_display.unwrap_or(false)
+    }
+
+    pub fn clear_show_display(&mut self) {
+        self.show_display = ::std::option::Option::None;
+    }
+
+    pub fn has_show_display(&self) -> bool {
+        self.show_display.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_show_display(&mut self, v: bool) {
+        self.show_display = ::std::option::Option::Some(v);
+    }
+
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut fields = ::std::vec::Vec::with_capacity(2);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
             "address_n",
             |m: &NostrGetPubkey| { &m.address_n },
             |m: &mut NostrGetPubkey| { &mut m.address_n },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "show_display",
+            |m: &NostrGetPubkey| { &m.show_display },
+            |m: &mut NostrGetPubkey| { &mut m.show_display },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<NostrGetPubkey>(
             "NostrGetPubkey",
@@ -78,6 +104,9 @@ impl ::protobuf::Message for NostrGetPubkey {
                 8 => {
                     self.address_n.push(is.read_uint32()?);
                 },
+                16 => {
+                    self.show_display = ::std::option::Option::Some(is.read_bool()?);
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -93,6 +122,9 @@ impl ::protobuf::Message for NostrGetPubkey {
         for value in &self.address_n {
             my_size += ::protobuf::rt::uint32_size(1, *value);
         };
+        if let Some(v) = self.show_display {
+            my_size += 1 + 1;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -102,6 +134,9 @@ impl ::protobuf::Message for NostrGetPubkey {
         for v in &self.address_n {
             os.write_uint32(1, *v)?;
         };
+        if let Some(v) = self.show_display {
+            os.write_bool(2, v)?;
+        }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -120,12 +155,14 @@ impl ::protobuf::Message for NostrGetPubkey {
 
     fn clear(&mut self) {
         self.address_n.clear();
+        self.show_display = ::std::option::Option::None;
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static NostrGetPubkey {
         static instance: NostrGetPubkey = NostrGetPubkey {
             address_n: ::std::vec::Vec::new(),
+            show_display: ::std::option::Option::None,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -1104,20 +1141,464 @@ impl ::protobuf::reflect::ProtobufValue for NostrEventSignature {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
+// @@protoc_insertion_point(message:hw.trezor.messages.nostr.NostrVerifyEvent)
+#[derive(PartialEq,Clone,Default,Debug)]
+pub struct NostrVerifyEvent {
+    // message fields
+    // @@protoc_insertion_point(field:hw.trezor.messages.nostr.NostrVerifyEvent.pubkey)
+    pub pubkey: ::std::option::Option<::std::vec::Vec<u8>>,
+    // @@protoc_insertion_point(field:hw.trezor.messages.nostr.NostrVerifyEvent.created_at)
+    pub created_at: ::std::option::Option<u32>,
+    // @@protoc_insertion_point(field:hw.trezor.messages.nostr.NostrVerifyEvent.kind)
+    pub kind: ::std::option::Option<u32>,
+    // @@protoc_insertion_point(field:hw.trezor.messages.nostr.NostrVerifyEvent.tags)
+    pub tags: ::std::vec::Vec<NostrTag>,
+    // @@protoc_insertion_point(field:hw.trezor.messages.nostr.NostrVerifyEvent.content)
+    pub content: ::std::option::Option<::std::string::String>,
+    // @@protoc_insertion_point(field:hw.trezor.messages.nostr.NostrVerifyEvent.id)
+    pub id: ::std::option::Option<::std::vec::Vec<u8>>,
+    // @@protoc_insertion_point(field:hw.trezor.messages.nostr.NostrVerifyEvent.signature)
+    pub signature: ::std::option::Option<::std::vec::Vec<u8>>,
+    // special fields
+    // @@protoc_insertion_point(special_field:hw.trezor.messages.nostr.NostrVerifyEvent.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a NostrVerifyEvent {
+    fn default() -> &'a NostrVerifyEvent {
+        <NostrVerifyEvent as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl NostrVerifyEvent {
+    pub fn new() -> NostrVerifyEvent {
+        ::std::default::Default::default()
+    }
+
+    // required bytes pubkey = 1;
+
+    pub fn pubkey(&self) -> &[u8] {
+        match self.pubkey.as_ref() {
+            Some(v) => v,
+            None => &[],
+        }
+    }
+
+    pub fn clear_pubkey(&mut self) {
+        self.pubkey = ::std::option::Option::None;
+    }
+
+    pub fn has_pubkey(&self) -> bool {
+        self.pubkey.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_pubkey(&mut self, v: ::std::vec::Vec<u8>) {
+        self.pubkey = ::std::option::Option::Some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_pubkey(&mut self) -> &mut ::std::vec::Vec<u8> {
+        if self.pubkey.is_none() {
+            self.pubkey = ::std::option::Option::Some(::std::vec::Vec::new());
+        }
+        self.pubkey.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_pubkey(&mut self) -> ::std::vec::Vec<u8> {
+        self.pubkey.take().unwrap_or_else(|| ::std::vec::Vec::new())
+    }
+
+    // required uint32 created_at = 2;
+
+    pub fn created_at(&self) -> u32 {
+        self.created_at.unwrap_or(0)
+    }
+
+    pub fn clear_created_at(&mut self) {
+        self.created_at = ::std::option::Option::None;
+    }
+
+    pub fn has_created_at(&self) -> bool {
+        self.created_at.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_created_at(&mut self, v: u32) {
+        self.created_at = ::std::option::Option::Some(v);
+    }
+
+    // required uint32 kind = 3;
+
+    pub fn kind(&self) -> u32 {
+        self.kind.unwrap_or(0)
+    }
+
+    pub fn clear_kind(&mut self) {
+        self.kind = ::std::option::Option::None;
+    }
+
+    pub fn has_kind(&self) -> bool {
+        self.kind.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_kind(&mut self, v: u32) {
+        self.kind = ::std::option::Option::Some(v);
+    }
+
+    // required string content = 5;
+
+    pub fn content(&self) -> &str {
+        match self.content.as_ref() {
+            Some(v) => v,
+            None => "",
+        }
+    }
+
+    pub fn clear_content(&mut self) {
+        self.content = ::std::option::Option::None;
+    }
+
+    pub fn has_content(&self) -> bool {
+        self.content.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_content(&mut self, v: ::std::string::String) {
+        self.content = ::std::option::Option::Some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_content(&mut self) -> &mut ::std::string::String {
+        if self.content.is_none() {
+            self.content = ::std::option::Option::Some(::std::string::String::new());
+        }
+        self.content.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_content(&mut self) -> ::std::string::String {
+        self.content.take().unwrap_or_else(|| ::std::string::String::new())
+    }
+
+    // required bytes id = 6;
+
+    pub fn id(&self) -> &[u8] {
+        match self.id.as_ref() {
+            Some(v) => v,
+            None => &[],
+        }
+    }
+
+    pub fn clear_id(&mut self) {
+        self.id = ::std::option::Option::None;
+    }
+
+    pub fn has_id(&self) -> bool {
+        self.id.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_id(&mut self, v: ::std::vec::Vec<u8>) {
+        self.id = ::std::option::Option::Some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_id(&mut self) -> &mut ::std::vec::Vec<u8> {
+        if self.id.is_none() {
+            self.id = ::std::option::Option::Some(::std::vec::Vec::new());
+        }
+        self.id.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_id(&mut self) -> ::std::vec::Vec<u8> {
+        self.id.take().unwrap_or_else(|| ::std::vec::Vec::new())
+    }
+
+    // required bytes signature = 7;
+
+    pub fn signature(&self) -> &[u8] {
+        match self.signature.as_ref() {
+            Some(v) => v,
+            None => &[],
+        }
+    }
+
+    pub fn clear_signature(&mut self) {
+        self.signature = ::std::option::Option::None;
+    }
+
+    pub fn has_signature(&self) -> bool {
+        self.signature.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_signature(&mut self, v: ::std::vec::Vec<u8>) {
+        self.signature = ::std::option::Option::Some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_signature(&mut self) -> &mut ::std::vec::Vec<u8> {
+        if self.signature.is_none() {
+            self.signature = ::std::option::Option::Some(::std::vec::Vec::new());
+        }
+        self.signature.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_signature(&mut self) -> ::std::vec::Vec<u8> {
+        self.signature.take().unwrap_or_else(|| ::std::vec::Vec::new())
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(7);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "pubkey",
+            |m: &NostrVerifyEvent| { &m.pubkey },
+            |m: &mut NostrVerifyEvent| { &mut m.pubkey },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "created_at",
+            |m: &NostrVerifyEvent| { &m.created_at },
+            |m: &mut NostrVerifyEvent| { &mut m.created_at },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "kind",
+            |m: &NostrVerifyEvent| { &m.kind },
+            |m: &mut NostrVerifyEvent| { &mut m.kind },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "tags",
+            |m: &NostrVerifyEvent| { &m.tags },
+            |m: &mut NostrVerifyEvent| { &mut m.tags },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "content",
+            |m: &NostrVerifyEvent| { &m.content },
+            |m: &mut NostrVerifyEvent| { &mut m.content },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "id",
+            |m: &NostrVerifyEvent| { &m.id },
+            |m: &mut NostrVerifyEvent| { &mut m.id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "signature",
+            |m: &NostrVerifyEvent| { &m.signature },
+            |m: &mut NostrVerifyEvent| { &mut m.signature },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<NostrVerifyEvent>(
+            "NostrVerifyEvent",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for NostrVerifyEvent {
+    const NAME: &'static str = "NostrVerifyEvent";
+
+    fn is_initialized(&self) -> bool {
+        if self.pubkey.is_none() {
+            return false;
+        }
+        if self.created_at.is_none() {
+            return false;
+        }
+        if self.kind.is_none() {
+            return false;
+        }
+        if self.content.is_none() {
+            return false;
+        }
+        if self.id.is_none() {
+            return false;
+        }
+        if self.signature.is_none() {
+            return false;
+        }
+        for v in &self.tags {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.pubkey = ::std::option::Option::Some(is.read_bytes()?);
+                },
+                16 => {
+                    self.created_at = ::std::option::Option::Some(is.read_uint32()?);
+                },
+                24 => {
+                    self.kind = ::std::option::Option::Some(is.read_uint32()?);
+                },
+                34 => {
+                    self.tags.push(is.read_message()?);
+                },
+                42 => {
+                    self.content = ::std::option::Option::Some(is.read_string()?);
+                },
+                50 => {
+                    self.id = ::std::option::Option::Some(is.read_bytes()?);
+                },
+                58 => {
+                    self.signature = ::std::option::Option::Some(is.read_bytes()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.pubkey.as_ref() {
+            my_size += ::protobuf::rt::bytes_size(1, &v);
+        }
+        if let Some(v) = self.created_at {
+            my_size += ::protobuf::rt::uint32_size(2, v);
+        }
+        if let Some(v) = self.kind {
+            my_size += ::protobuf::rt::uint32_size(3, v);
+        }
+        for value in &self.tags {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        if let Some(v) = self.content.as_ref() {
+            my_size += ::protobuf::rt::string_size(5, &v);
+        }
+        if let Some(v) = self.id.as_ref() {
+            my_size += ::protobuf::rt::bytes_size(6, &v);
+        }
+        if let Some(v) = self.signature.as_ref() {
+            my_size += ::protobuf::rt::bytes_size(7, &v);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.pubkey.as_ref() {
+            os.write_bytes(1, v)?;
+        }
+        if let Some(v) = self.created_at {
+            os.write_uint32(2, v)?;
+        }
+        if let Some(v) = self.kind {
+            os.write_uint32(3, v)?;
+        }
+        for v in &self.tags {
+            ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
+        };
+        if let Some(v) = self.content.as_ref() {
+            os.write_string(5, v)?;
+        }
+        if let Some(v) = self.id.as_ref() {
+            os.write_bytes(6, v)?;
+        }
+        if let Some(v) = self.signature.as_ref() {
+            os.write_bytes(7, v)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> NostrVerifyEvent {
+        NostrVerifyEvent::new()
+    }
+
+    fn clear(&mut self) {
+        self.pubkey = ::std::option::Option::None;
+        self.created_at = ::std::option::Option::None;
+        self.kind = ::std::option::Option::None;
+        self.tags.clear();
+        self.content = ::std::option::Option::None;
+        self.id = ::std::option::Option::None;
+        self.signature = ::std::option::Option::None;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static NostrVerifyEvent {
+        static instance: NostrVerifyEvent = NostrVerifyEvent {
+            pubkey: ::std::option::Option::None,
+            created_at: ::std::option::Option::None,
+            kind: ::std::option::Option::None,
+            tags: ::std::vec::Vec::new(),
+            content: ::std::option::Option::None,
+            id: ::std::option::Option::None,
+            signature: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for NostrVerifyEvent {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("NostrVerifyEvent").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for NostrVerifyEvent {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for NostrVerifyEvent {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x14messages-nostr.proto\x12\x18hw.trezor.messages.nostr\"-\n\x0eNostr\
-    GetPubkey\x12\x1b\n\taddress_n\x18\x01\x20\x03(\rR\x08addressN\"%\n\x0bN\
-    ostrPubkey\x12\x16\n\x06pubkey\x18\x01\x20\x02(\x0cR\x06pubkey\"H\n\x08N\
-    ostrTag\x12\x10\n\x03key\x18\x01\x20\x02(\tR\x03key\x12\x14\n\x05value\
-    \x18\x02\x20\x01(\tR\x05value\x12\x14\n\x05extra\x18\x03\x20\x03(\tR\x05\
-    extra\"\xb2\x01\n\x0eNostrSignEvent\x12\x1b\n\taddress_n\x18\x01\x20\x03\
-    (\rR\x08addressN\x12\x1d\n\ncreated_at\x18\x02\x20\x02(\rR\tcreatedAt\
-    \x12\x12\n\x04kind\x18\x03\x20\x02(\rR\x04kind\x126\n\x04tags\x18\x04\
-    \x20\x03(\x0b2\".hw.trezor.messages.nostr.NostrTagR\x04tags\x12\x18\n\
-    \x07content\x18\x05\x20\x02(\tR\x07content\"[\n\x13NostrEventSignature\
-    \x12\x16\n\x06pubkey\x18\x01\x20\x02(\x0cR\x06pubkey\x12\x0e\n\x02id\x18\
-    \x02\x20\x02(\x0cR\x02id\x12\x1c\n\tsignature\x18\x03\x20\x02(\x0cR\tsig\
-    natureB9\n#com.satoshilabs.trezor.lib.protobufB\x12TrezorMessageNostr\
+    \n\x14messages-nostr.proto\x12\x18hw.trezor.messages.nostr\x1a\roptions.\
+    proto\"P\n\x0eNostrGetPubkey\x12\x1b\n\taddress_n\x18\x01\x20\x03(\rR\
+    \x08addressN\x12!\n\x0cshow_display\x18\x02\x20\x01(\x08R\x0bshowDisplay\
+    \"%\n\x0bNostrPubkey\x12\x16\n\x06pubkey\x18\x01\x20\x02(\x0cR\x06pubkey\
+    \"H\n\x08NostrTag\x12\x10\n\x03key\x18\x01\x20\x02(\tR\x03key\x12\x14\n\
+    \x05value\x18\x02\x20\x01(\tR\x05value\x12\x14\n\x05extra\x18\x03\x20\
+    \x03(\tR\x05extra\"\xb2\x01\n\x0eNostrSignEvent\x12\x1b\n\taddress_n\x18\
+    \x01\x20\x03(\rR\x08addressN\x12\x1d\n\ncreated_at\x18\x02\x20\x02(\rR\t\
+    createdAt\x12\x12\n\x04kind\x18\x03\x20\x02(\rR\x04kind\x126\n\x04tags\
+    \x18\x04\x20\x03(\x0b2\".hw.trezor.messages.nostr.NostrTagR\x04tags\x12\
+    \x18\n\x07content\x18\x05\x20\x02(\tR\x07content\"[\n\x13NostrEventSigna\
+    ture\x12\x16\n\x06pubkey\x18\x01\x20\x02(\x0cR\x06pubkey\x12\x0e\n\x02id\
+    \x18\x02\x20\x02(\x0cR\x02id\x12\x1c\n\tsignature\x18\x03\x20\x02(\x0cR\
+    \tsignature\"\xdd\x01\n\x10NostrVerifyEvent\x12\x16\n\x06pubkey\x18\x01\
+    \x20\x02(\x0cR\x06pubkey\x12\x1d\n\ncreated_at\x18\x02\x20\x02(\rR\tcrea\
+    tedAt\x12\x12\n\x04kind\x18\x03\x20\x02(\rR\x04kind\x126\n\x04tags\x18\
+    \x04\x20\x03(\x0b2\".hw.trezor.messages.nostr.NostrTagR\x04tags\x12\x18\
+    \n\x07content\x18\x05\x20\x02(\tR\x07content\x12\x0e\n\x02id\x18\x06\x20\
+    \x02(\x0cR\x02id\x12\x1c\n\tsignature\x18\x07\x20\x02(\x0cR\tsignatureB=\
+    \n#com.satoshilabs.trezor.lib.protobufB\x12TrezorMessageNostr\x80\xa6\
+    \x1d\x01\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -1134,13 +1615,15 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     static file_descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::FileDescriptor> = ::protobuf::rt::Lazy::new();
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
-            let mut deps = ::std::vec::Vec::with_capacity(0);
-            let mut messages = ::std::vec::Vec::with_capacity(5);
+            let mut deps = ::std::vec::Vec::with_capacity(1);
+            deps.push(super::options::file_descriptor().clone());
+            let mut messages = ::std::vec::Vec::with_capacity(6);
             messages.push(NostrGetPubkey::generated_message_descriptor_data());
             messages.push(NostrPubkey::generated_message_descriptor_data());
             messages.push(NostrTag::generated_message_descriptor_data());
             messages.push(NostrSignEvent::generated_message_descriptor_data());
             messages.push(NostrEventSignature::generated_message_descriptor_data());
+            messages.push(NostrVerifyEvent::generated_message_descriptor_data());
             let mut enums = ::std::vec::Vec::with_capacity(0);
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(
                 file_descriptor_proto(),

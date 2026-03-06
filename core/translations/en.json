@@ -1345,6 +1345,7 @@
       "Eckhart": ""
     },
     "nostr__event_kind_template": "Event kind: {0}",
+    "nostr__valid_event": "The event signature is valid.",
     "passphrase__access_hidden_wallet": "Access hidden wallet",
     "passphrase__access_wallet": "Access passphrase wallet?",
     "passphrase__always_on_device": "Always enter your passphrase on Trezor?",

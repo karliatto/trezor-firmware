@@ -41,3 +41,17 @@ def sign_event(
     sign_event: messages.NostrSignEvent,
 ) -> messages.NostrEventSignature:
     return session.call(sign_event, expect=messages.NostrEventSignature)
+
+
+@workflow()
+def verify_event(
+    session: "Session",
+    event: messages.NostrVerifyEvent,
+) -> bool:
+    from . import exceptions
+
+    try:
+        session.call(event, expect=messages.Success)
+        return True
+    except exceptions.TrezorFailure:
+        return False

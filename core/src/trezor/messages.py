@@ -5397,11 +5397,13 @@ if TYPE_CHECKING:
 
     class NostrGetPubkey(protobuf.MessageType):
         address_n: "list[int]"
+        show_display: "bool | None"
 
         def __init__(
             self,
             *,
             address_n: "list[int] | None" = None,
+            show_display: "bool | None" = None,
         ) -> None:
             pass
 
@@ -5479,6 +5481,32 @@ if TYPE_CHECKING:
 
         @classmethod
         def is_type_of(cls, msg: Any) -> TypeGuard["NostrEventSignature"]:
+            return isinstance(msg, cls)
+
+    class NostrVerifyEvent(protobuf.MessageType):
+        pubkey: "AnyBytes"
+        created_at: "int"
+        kind: "int"
+        tags: "list[NostrTag]"
+        content: "str"
+        id: "AnyBytes"
+        signature: "AnyBytes"
+
+        def __init__(
+            self,
+            *,
+            pubkey: "AnyBytes",
+            created_at: "int",
+            kind: "int",
+            content: "str",
+            id: "AnyBytes",
+            signature: "AnyBytes",
+            tags: "list[NostrTag] | None" = None,
+        ) -> None:
+            pass
+
+        @classmethod
+        def is_type_of(cls, msg: Any) -> TypeGuard["NostrVerifyEvent"]:
             return isinstance(msg, cls)
 
     class RippleGetAddress(protobuf.MessageType):
