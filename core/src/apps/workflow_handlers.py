@@ -132,6 +132,8 @@ def _find_message_handler_module(msg_type: int) -> str:
                 return "apps.nostr.sign_event"
             if msg_type == MessageType.NostrVerifyEvent:
                 return "apps.nostr.verify_event"
+            if msg_type == MessageType.NostrDecryptNip17:
+                return "apps.nostr.decrypt_nip17"
 
         # tron
         if msg_type == MessageType.TronGetAddress:

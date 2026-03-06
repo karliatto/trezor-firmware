@@ -342,6 +342,9 @@ enum MessageType {
     MessageType_NostrPubkey = 2002 [(wire_out) = true];
     MessageType_NostrSignEvent = 2003 [(wire_in) = true];
     MessageType_NostrEventSignature = 2004 [(wire_out) = true];
+    MessageType_NostrVerifyEvent = 2005 [(wire_in) = true];
+    MessageType_NostrDecryptNip17 = 2006 [(wire_in) = true];
+    MessageType_NostrDecryptedNip17 = 2007 [(wire_out) = true];
 
     // Evolu
     MessageType_EvoluGetNode = 2100 [(bitcoin_only) = true, (wire_in) = true];

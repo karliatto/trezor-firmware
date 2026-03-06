@@ -270,6 +270,9 @@ if not utils.BITCOIN_ONLY:
     NostrPubkey = 2002
     NostrSignEvent = 2003
     NostrEventSignature = 2004
+    NostrVerifyEvent = 2005
+    NostrDecryptNip17 = 2006
+    NostrDecryptedNip17 = 2007
     TronGetAddress = 2200
     TronAddress = 2201
     TronSignTx = 2202

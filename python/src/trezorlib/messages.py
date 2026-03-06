@@ -691,6 +691,9 @@ class MessageType(IntEnum):
     NostrPubkey = 2002
     NostrSignEvent = 2003
     NostrEventSignature = 2004
+    NostrVerifyEvent = 2005
+    NostrDecryptNip17 = 2006
+    NostrDecryptedNip17 = 2007
     EvoluGetNode = 2100
     EvoluNode = 2101
     EvoluSignRegistrationRequest = 2102
@@ -7134,7 +7137,7 @@ class NostrEventSignature(protobuf.MessageType):
 
 
 class NostrVerifyEvent(protobuf.MessageType):
-    MESSAGE_WIRE_TYPE = None
+    MESSAGE_WIRE_TYPE = 2005
     FIELDS = {
         1: protobuf.Field("pubkey", "bytes", repeated=False, required=True),
         2: protobuf.Field("created_at", "uint32", repeated=False, required=True),
@@ -7163,6 +7166,40 @@ class NostrVerifyEvent(protobuf.MessageType):
         self.content = content
         self.id = id
         self.signature = signature
+
+
+class NostrDecryptNip17(protobuf.MessageType):
+    MESSAGE_WIRE_TYPE = 2006
+    FIELDS = {
+        1: protobuf.Field("address_n", "uint32", repeated=True, required=False, default=None),
+        2: protobuf.Field("sender_pubkey", "bytes", repeated=False, required=True),
+        3: protobuf.Field("payload", "bytes", repeated=False, required=True),
+    }
+
+    def __init__(
+        self,
+        *,
+        sender_pubkey: "bytes",
+        payload: "bytes",
+        address_n: Optional[Sequence["int"]] = None,
+    ) -> None:
+        self.address_n: Sequence["int"] = address_n if address_n is not None else []
+        self.sender_pubkey = sender_pubkey
+        self.payload = payload
+
+
+class NostrDecryptedNip17(protobuf.MessageType):
+    MESSAGE_WIRE_TYPE = 2007
+    FIELDS = {
+        1: protobuf.Field("plaintext", "bytes", repeated=False, required=True),
+    }
+
+    def __init__(
+        self,
+        *,
+        plaintext: "bytes",
+    ) -> None:
+        self.plaintext = plaintext
 
 
 class RippleGetAddress(protobuf.MessageType):

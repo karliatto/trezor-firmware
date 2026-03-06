@@ -5509,6 +5509,38 @@ if TYPE_CHECKING:
         def is_type_of(cls, msg: Any) -> TypeGuard["NostrVerifyEvent"]:
             return isinstance(msg, cls)
 
+    class NostrDecryptNip17(protobuf.MessageType):
+        address_n: "list[int]"
+        sender_pubkey: "AnyBytes"
+        payload: "AnyBytes"
+
+        def __init__(
+            self,
+            *,
+            sender_pubkey: "AnyBytes",
+            payload: "AnyBytes",
+            address_n: "list[int] | None" = None,
+        ) -> None:
+            pass
+
+        @classmethod
+        def is_type_of(cls, msg: Any) -> TypeGuard["NostrDecryptNip17"]:
+            return isinstance(msg, cls)
+
+    class NostrDecryptedNip17(protobuf.MessageType):
+        plaintext: "AnyBytes"
+
+        def __init__(
+            self,
+            *,
+            plaintext: "AnyBytes",
+        ) -> None:
+            pass
+
+        @classmethod
+        def is_type_of(cls, msg: Any) -> TypeGuard["NostrDecryptedNip17"]:
+            return isinstance(msg, cls)
+
     class RippleGetAddress(protobuf.MessageType):
         address_n: "list[int]"
         show_display: "bool | None"

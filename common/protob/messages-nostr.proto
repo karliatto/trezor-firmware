@@ -87,3 +87,24 @@ message NostrVerifyEvent {
     required bytes id = 6;           // Event ID to verify (32 bytes)
     required bytes signature = 7;    // Schnorr signature to verify (64 bytes)
 }
+
+/**
+ * Request: Ask device to decrypt a NIP-17 direct message (NIP-44 encryption)
+ * @start
+ * @next NostrDecryptedNip17
+ * @next Failure
+ */
+message NostrDecryptNip17 {
+    repeated uint32 address_n = 1;   // used to derive the recipient's key
+
+    required bytes sender_pubkey = 2;  // sender's x-only public key (32 bytes)
+    required bytes payload = 3;        // NIP-44 v2 payload: version(1) + nonce(32) + ciphertext + mac(32)
+}
+
+/**
+ * Response: Decrypted NIP-17 direct message
+ * @end
+ */
+message NostrDecryptedNip17 {
+    required bytes plaintext = 1;  // decrypted message content
+}

@@ -55,3 +55,11 @@ def verify_event(
         return True
     except exceptions.TrezorFailure:
         return False
+
+
+@workflow()
+def decrypt_nip17(
+    session: "Session",
+    decrypt_msg: messages.NostrDecryptNip17,
+) -> bytes:
+    return session.call(decrypt_msg, expect=messages.NostrDecryptedNip17).plaintext
